@@ -6,6 +6,8 @@ import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.domain.UserStatus;
 import com.pickcar.auth.infrastructure.UserRepository;
 import com.pickcar.company.application.CompanyService;
+import com.pickcar.company.domain.ContractStatus;
+import com.pickcar.company.presentation.dto.request.CompanyJoinRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +24,13 @@ public class UserService {
     public void create(Long companyId, UserRole role) {
 
         //FIXME: 리팩토링으로 책임 분리
-        if(role.equals(UserRole.SUPER_ADMIN)) {
+        if (role.equals(UserRole.SUPER_ADMIN)) {
             throw new IllegalArgumentException("[ERROR] User Can't be a Super Admin");
         }
 
         User user = User.builder()
-                .company(companyService.create())   // FIXME: find by companyId
+                .company(companyService.create(new CompanyJoinRequest("", "", "", "", "", "",
+                        ContractStatus.ACTIVE)))   // FIXME: find by companyId
                 .info(new UserInfo("email", "password", "name", "phone")) // FIXME
                 .status(UserStatus.ACTIVE)
                 .role(role)
