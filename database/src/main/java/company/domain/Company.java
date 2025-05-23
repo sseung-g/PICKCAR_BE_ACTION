@@ -1,10 +1,16 @@
 package company.domain;
 
+import auth.domain.User;
 import global.domain.BaseEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company extends BaseEntity {
 
+    @Column(nullable = false)
     private String name;
 
     private String address;
@@ -29,6 +36,7 @@ public class Company extends BaseEntity {
 
     private String description;
 
+    @Column(nullable = false)
     private String businessNumber;
 
     @Enumerated(EnumType.STRING)

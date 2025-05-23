@@ -3,6 +3,7 @@ package rental.domain;
 import car.domain.Car;
 import company.domain.Company;
 import global.domain.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,9 +35,11 @@ public class Rental extends BaseEntity {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
+    @Column(nullable = false)
     private LocalDateTime rentedAt;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RentalStatus rentalStatus;
 
 }

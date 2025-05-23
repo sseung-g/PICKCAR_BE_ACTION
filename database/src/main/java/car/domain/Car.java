@@ -31,7 +31,6 @@ public class Car extends BaseEntity {
     @Column(nullable = false)
     private Boolean hasGps;
 
-    @Column(nullable = false)
     private Boolean isRented;
 
     @Column(nullable = false)

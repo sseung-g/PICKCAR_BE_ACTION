@@ -1,5 +1,6 @@
 package reservation.domain;
 
+import auth.domain.User;
 import car.domain.Car;
 import global.domain.BaseEntity;
 import jakarta.persistence.Column;
@@ -25,13 +26,15 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation extends BaseEntity {
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+    @Column(nullable = false)
     private LocalDateTime rentedAt;
 
     private LocalDateTime returnedAt;

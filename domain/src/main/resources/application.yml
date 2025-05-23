@@ -1,7 +1,9 @@
 spring:
+  profiles:
+    active: secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: # database url
+    url: #database url
     username: # database username
     password: # database password
   jpa:

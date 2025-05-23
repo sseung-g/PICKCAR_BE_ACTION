@@ -2,10 +2,13 @@ package auth.domain;
 
 import company.domain.Company;
 import global.domain.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -22,16 +25,19 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
-    @ManyToOne
-    private Company companyId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
     @Embedded
     private UserInfo info;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UserRole userRole;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UserStatus status;
 
 }
