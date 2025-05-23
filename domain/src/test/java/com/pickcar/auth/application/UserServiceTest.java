@@ -29,14 +29,14 @@ class UserServiceTest {
     @Test
     @DisplayName("User가 생성되고, ID 기반 조회가 가능합니다")
     void t001() {
-        userService.create();
+        userService.create(1L, UserRole.EMPLOYEE);
 
         User user = userService.getById(1L);
 
         Assertions.assertThat(user).isNotNull();
         Assertions.assertThat(user.getCreatedAt())
                 .isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now());
-        Assertions.assertThat(user.getRole()).isNotEqualTo(UserRole.SUPER_ADMIN);
+        Assertions.assertThat(user.getRole()).isNotEqualTo(UserRole.SUPER_ADMIN);;
     }
     
     @Test
