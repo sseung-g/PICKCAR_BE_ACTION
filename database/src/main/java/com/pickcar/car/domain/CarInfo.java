@@ -19,7 +19,7 @@ public class CarInfo {
 
     private String color;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String licensePlate;
 
     private String carAge;
