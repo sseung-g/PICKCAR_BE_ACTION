@@ -47,4 +47,12 @@ class UserServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("User는 SuperAdmin으로 생성될 수 없습니다")
+    void t003() {
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
+            userService.create(1L, UserRole.SUPER_ADMIN);
+        });
+    }
+
 }
