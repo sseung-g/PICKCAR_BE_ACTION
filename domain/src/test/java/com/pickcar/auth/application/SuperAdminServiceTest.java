@@ -1,6 +1,7 @@
 package com.pickcar.auth.application;
 
 import com.pickcar.auth.domain.SuperAdmin;
+import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.infrastructure.SuperAdminRepository;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @SpringBootTest
+@ActiveProfiles(profiles = "test")
 class SuperAdminServiceTest {
 
     @Autowired
@@ -30,6 +33,7 @@ class SuperAdminServiceTest {
         Assertions.assertThat(superAdmin).isNotNull();
         Assertions.assertThat(superAdmin.getCreatedAt())
                 .isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now());
+        Assertions.assertThat(superAdmin.getRole()).isEqualTo(UserRole.SUPER_ADMIN);
     }
 
     @Test
