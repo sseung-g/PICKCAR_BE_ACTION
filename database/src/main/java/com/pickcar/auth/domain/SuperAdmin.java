@@ -21,10 +21,10 @@ import lombok.experimental.SuperBuilder;
 public class SuperAdmin extends BaseEntity {
 
     @Embedded
-    private UserInfo userInfo;
+    private UserInfo info;
 
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole role;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
