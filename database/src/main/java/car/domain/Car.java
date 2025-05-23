@@ -1,40 +1,28 @@
 package car.domain;
 
+import global.domain.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@Getter
+@AllArgsConstructor
 @Table(name = "cars")
-public class Car {
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Car extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String model;
-
-    @Column(nullable = false)
-    private String color;
-
-    @Column(nullable = false)
-    private String licensePlate;
-
-    @Column(nullable = false)
-    private String carAge;
-
-    @Column(nullable = false)
-    private String brandName;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Fuel fuelType;
+    @Embedded
+    private CarInfo info;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
