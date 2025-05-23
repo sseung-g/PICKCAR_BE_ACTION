@@ -30,4 +30,9 @@ public class CompanyService {
         return companyRepository.save(company);     //FIXME: 반환 금지 
     }
 
+    public Company getById(Long id) {
+        //TODO: ID 기반 회사 조회
+
+        return null;
+    }
 }
