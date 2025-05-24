@@ -1,4 +1,4 @@
-package com.pickcar.car.domain;
+package com.pickcar.vehicle.domain;
 
 import com.pickcar.global.domain.BaseEntity;
 import jakarta.persistence.Column;
@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -16,17 +17,17 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name = "cars")
-@SuperBuilder(toBuilder = true)
+@Table(name = "vehicles")
+@Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Car extends BaseEntity {
+public class Vehicle extends BaseEntity {
 
     @Embedded
-    private CarInfo info;
+    private VehicleInfo info;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private OfferStatus offerStatus;
+    private VehicleStatus status;
 
     @Column(nullable = false)
     private Boolean hasGps;

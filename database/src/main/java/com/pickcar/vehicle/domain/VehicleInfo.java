@@ -1,4 +1,4 @@
-package com.pickcar.car.domain;
+package com.pickcar.vehicle.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CarInfo {
+public class VehicleInfo {
 
     private String model;
 
@@ -28,4 +28,5 @@ public class CarInfo {
 
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
+
 }

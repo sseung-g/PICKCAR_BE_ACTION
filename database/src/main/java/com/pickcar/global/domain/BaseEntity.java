@@ -18,7 +18,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @ToString
 @MappedSuperclass
-@SuperBuilder(toBuilder = true)
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseEntity {
