@@ -1,9 +1,9 @@
-package com.pickcar.car.application;
+package com.pickcar.vehicle.application;
 
-import com.pickcar.car.domain.Car;
-import com.pickcar.car.domain.CarInfo;
-import com.pickcar.car.domain.OfferStatus;
-import com.pickcar.car.infrastructure.CarRepository;
+import com.pickcar.vehicle.domain.Vehicle;
+import com.pickcar.vehicle.domain.VehicleInfo;
+import com.pickcar.vehicle.domain.VehicleStatus;
+import com.pickcar.vehicle.infrastructure.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class CarService {
+public class VehicleService {
 
-    private final CarRepository carRepository;
+    private final VehicleRepository vehicleRepository;
 
     @Transactional
-    public void create(CarInfo info) {
+    public void create(VehicleInfo info) {
 
 //        //FIXME: 책임 분리 필요
         if(hasLicensePlateAlready(info.getLicensePlate())) {
@@ -24,23 +24,23 @@ public class CarService {
         }
 
         //FIXME : 전체적으로 하드코딩 금지
-        Car car = Car.builder()
+        Vehicle vehicle = Vehicle.builder()
                 .info(info)
                 .hasGps(true)
                 .isRented(false)
                 .isActive(true)
-                .offerStatus(OfferStatus.OPERABLE)
+                .status(VehicleStatus.OPERABLE)
                 .build();
 
-        carRepository.save(car);
+        vehicleRepository.save(vehicle);
     }
 
-    public Car getById(Long id) {
-        return carRepository.findById(id)
+    public Vehicle getById(Long id) {
+        return vehicleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] Car Not Found By Id " + id));
     }
 
     private boolean hasLicensePlateAlready(String licensePlate) {
-        return carRepository.findByInfo_LicensePlate(licensePlate).isPresent();
+        return vehicleRepository.findByInfo_LicensePlate(licensePlate).isPresent();
     }
 }

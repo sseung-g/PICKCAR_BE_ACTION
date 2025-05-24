@@ -29,8 +29,7 @@ public class UserService {
         }
 
         User user = User.builder()
-                .company(companyService.create(new CompanyJoinRequest("", "", "", "", "", "",
-                        ContractStatus.ACTIVE)))   // FIXME: find by companyId
+                .companyId(1L)      //TODO: 있는지 검사 필요
                 .info(new UserInfo("email", "password", "name", "phone")) // FIXME
                 .status(UserStatus.ACTIVE)
                 .role(role)

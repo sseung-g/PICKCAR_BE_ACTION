@@ -1,5 +1,6 @@
 package com.pickcar.auth.application;
 
+import com.pickcar.DomainApplication;
 import com.pickcar.auth.domain.SuperAdmin;
 import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.infrastructure.SuperAdminRepository;
@@ -13,8 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@SpringBootTest
 @ActiveProfiles(profiles = "test")
+@SpringBootTest(classes = DomainApplication.class)
 class SuperAdminServiceTest {
 
     @Autowired

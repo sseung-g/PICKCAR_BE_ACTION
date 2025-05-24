@@ -1,15 +1,12 @@
 package com.pickcar.company.application;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.pickcar.DomainApplication;
 import com.pickcar.company.domain.Company;
 import com.pickcar.company.domain.ContractStatus;
 import com.pickcar.company.infrastructure.CompanyRepository;
 import com.pickcar.company.presentation.dto.request.CompanyJoinRequest;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
 @Transactional
 @ActiveProfiles(profiles = "test")
+@SpringBootTest(classes = DomainApplication.class)
 class CompanyServiceTest {
 
     @Autowired

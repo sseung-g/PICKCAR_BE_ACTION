@@ -1,9 +1,11 @@
 package com.pickcar.car.application;
 
-import com.pickcar.car.domain.Car;
-import com.pickcar.car.domain.CarInfo;
-import com.pickcar.car.domain.FuelType;
-import com.pickcar.car.infrastructure.CarRepository;
+import com.pickcar.DomainApplication;
+import com.pickcar.vehicle.application.VehicleService;
+import com.pickcar.vehicle.domain.FuelType;
+import com.pickcar.vehicle.domain.Vehicle;
+import com.pickcar.vehicle.domain.VehicleInfo;
+import com.pickcar.vehicle.infrastructure.VehicleRepository;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,29 +16,29 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@SpringBootTest
 @ActiveProfiles(profiles = "test")
-class CarServiceTest {
+@SpringBootTest(classes = DomainApplication.class)
+class VehicleServiceTest {
 
     @Autowired
-    private CarService carService;
+    private VehicleService vehicleService;
 
     @Autowired
-    private CarRepository carRepository;
+    private VehicleRepository vehicleRepository;
 
     @Test
     @DisplayName("자동차가 생성되고, Id 기반 조회가 가능")
     void t001() {
         //FIXME: 제거 필요
-        CarInfo testInfo = new CarInfo("model", "color", "licensePlate",
+        VehicleInfo testInfo = new VehicleInfo("model", "color", "licensePlate",
                 "carAge", "brandName", FuelType.DIESEL);
 
-        carService.create(testInfo);
+        vehicleService.create(testInfo);
 
-        Car car = carService.getById(1L);
+        Vehicle vehicle = vehicleService.getById(1L);
 
-        Assertions.assertThat(car).isNotNull();
-        Assertions.assertThat(car.getCreatedAt())
+        Assertions.assertThat(vehicle).isNotNull();
+        Assertions.assertThat(vehicle.getCreatedAt())
                 .isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now());
     }
 
@@ -44,12 +46,12 @@ class CarServiceTest {
     @DisplayName("자동차 번호판이 동일하게 생성되려 한다면, 특정 예외를 반환")
     void t002() {
         //FIXME: 제거 필요
-        CarInfo testInfo = new CarInfo("model", "color", "licensePlate",
+        VehicleInfo testInfo = new VehicleInfo("model", "color", "licensePlate",
                 "carAge", "brandName", FuelType.DIESEL);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-            carService.create(testInfo);
-            carService.create(testInfo);
+            vehicleService.create(testInfo);
+            vehicleService.create(testInfo);
         });
     }
 
@@ -57,7 +59,7 @@ class CarServiceTest {
     @DisplayName("해당 ID를 가진 자동차를 찾지 못한다면 특정 예외를 반환")
     void t003() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-            carService.getById(0L);
+            vehicleService.getById(0L);
         });
     }
 }

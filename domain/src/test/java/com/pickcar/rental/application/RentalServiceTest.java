@@ -1,7 +1,6 @@
 package com.pickcar.rental.application;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.pickcar.DomainApplication;
 import com.pickcar.rental.domain.Rental;
 import com.pickcar.rental.infrastructure.RentalRepository;
 import java.time.LocalDateTime;
@@ -13,9 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
 @Transactional
 @ActiveProfiles(profiles = "test")
+@SpringBootTest(classes = DomainApplication.class)
 class RentalServiceTest {
 
     @Autowired

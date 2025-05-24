@@ -1,8 +1,6 @@
 package com.pickcar.auth.application;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.pickcar.auth.domain.SuperAdmin;
+import com.pickcar.DomainApplication;
 import com.pickcar.auth.domain.User;
 import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.infrastructure.UserRepository;
@@ -16,8 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@SpringBootTest
 @ActiveProfiles(profiles = "test")
+@SpringBootTest(classes = DomainApplication.class)
 class UserServiceTest {
 
     @Autowired
@@ -25,7 +23,7 @@ class UserServiceTest {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Test
     @DisplayName("User가 생성되고, ID 기반 조회가 가능합니다")
     void t001() {
@@ -36,9 +34,10 @@ class UserServiceTest {
         Assertions.assertThat(user).isNotNull();
         Assertions.assertThat(user.getCreatedAt())
                 .isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now());
-        Assertions.assertThat(user.getRole()).isNotEqualTo(UserRole.SUPER_ADMIN);;
+        Assertions.assertThat(user.getRole()).isNotEqualTo(UserRole.SUPER_ADMIN);
+        ;
     }
-    
+
     @Test
     @DisplayName("ID 기반 조회시, 올바르지 않은 값 입력시 특정 예외가 발생합니다")
     void t002() {
