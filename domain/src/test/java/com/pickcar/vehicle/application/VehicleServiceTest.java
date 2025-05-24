@@ -1,7 +1,6 @@
-package com.pickcar.car.application;
+package com.pickcar.vehicle.application;
 
 import com.pickcar.DomainApplication;
-import com.pickcar.vehicle.application.VehicleService;
 import com.pickcar.vehicle.domain.FuelType;
 import com.pickcar.vehicle.domain.Vehicle;
 import com.pickcar.vehicle.domain.VehicleInfo;
