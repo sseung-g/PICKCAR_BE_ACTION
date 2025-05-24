@@ -17,9 +17,8 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @AllArgsConstructor
-@ToString(callSuper = true)
+@Builder(toBuilder = true)
 @Table(name = "super_admins")
-@SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SuperAdmin extends BaseEntity {
 

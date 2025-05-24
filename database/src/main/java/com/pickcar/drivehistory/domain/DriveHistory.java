@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -18,14 +19,12 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @AllArgsConstructor
+@Builder(toBuilder = true)
 @Table(name = "drive_histories")
-@SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DriveHistory extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
+    private Long reservationId;
 
     @Column(nullable = false)
     private LocalDateTime drivingStartedAt;

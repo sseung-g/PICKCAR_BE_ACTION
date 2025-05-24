@@ -1,8 +1,5 @@
-package com.pickcar.car.domain;
+package com.pickcar.vehicle.domain;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public enum FuelType {
     LPG("LPG"),
     PETROL("휘발유"),
@@ -10,4 +7,8 @@ public enum FuelType {
     ELECTRIC("전기");
 
     private final String description;
+
+    FuelType(String description) {
+        this.description = description;
+    }
 }

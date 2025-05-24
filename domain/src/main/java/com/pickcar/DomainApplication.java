@@ -5,9 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-//FIXME: Application 실행 위치
 @EntityScan(basePackages = {
-        "**.domain"         //FIXME: 와일드 카드 경로 부적절 가능성 있음
+        "com.pickcar.auth.domain",
+        "com.pickcar.company.domain",
+        "com.pickcar.drivehistory.domain",
+        "com.pickcar.rental.domain",
+        "com.pickcar.reservation.domain",
+        "com.pickcar.vehicle.domain"
 })
 @EnableJpaAuditing
 @SpringBootApplication
