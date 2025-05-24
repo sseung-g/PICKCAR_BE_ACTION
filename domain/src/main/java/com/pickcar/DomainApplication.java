@@ -4,9 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-//FIXME: Application 실행 위치
 @EntityScan(basePackages = {
-        "**.domain"         //FIXME: 와일드 카드 경로 부적절 가능성 있음
+        "com.pickcar.auth.domain",
+        "com.pickcar.company.domain",
+        "com.pickcar.drivehistory.domain",
+        "com.pickcar.rental.domain",
+        "com.pickcar.reservation.domain",
+        "com.pickcar.vehicle.domain"
 })
 @SpringBootApplication
 public class DomainApplication {
