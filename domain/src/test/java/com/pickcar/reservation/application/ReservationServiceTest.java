@@ -3,6 +3,7 @@ package com.pickcar.reservation.application;
 import com.pickcar.DomainApplication;
 import com.pickcar.reservation.domain.Reservation;
 import com.pickcar.reservation.infrastructure.ReservationRepository;
+import com.pickcar.reservation.presentation.dto.request.ReservationCreateRequest;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,8 @@ class ReservationServiceTest {
     @Test
     @DisplayName("예약의 생성과 ID 기반 조회가 가능하다")
     void t001() {
-        reservationService.create();
+        ReservationCreateRequest testRequest = new ReservationCreateRequest(1L, 1L, LocalDateTime.now());
+        reservationService.create(testRequest);
 
         Reservation reservation = reservationService.getById(1L);
 
