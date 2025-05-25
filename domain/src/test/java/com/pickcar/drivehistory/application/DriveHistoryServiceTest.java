@@ -3,6 +3,8 @@ package com.pickcar.drivehistory.application;
 import com.pickcar.DomainApplication;
 import com.pickcar.drivehistory.domain.DriveHistory;
 import com.pickcar.drivehistory.infrastructure.DriveHistoryRepository;
+import com.pickcar.drivehistory.presentation.dto.request.DriveHistoryCreateRequest;
+import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,9 @@ class DriveHistoryServiceTest {
     @Test
     @DisplayName("운행 일지가 생성되고, ID 기반 조회가 가능함")
     void t001() {
-        driveHistoryService.create();
+        LocalDateTime now = LocalDateTime.now();
+        DriveHistoryCreateRequest testRequest = new DriveHistoryCreateRequest(1L, now, now, now, 1.23D);
+        driveHistoryService.create(testRequest);
 
         DriveHistory history = driveHistoryService.getById(1L);
 
