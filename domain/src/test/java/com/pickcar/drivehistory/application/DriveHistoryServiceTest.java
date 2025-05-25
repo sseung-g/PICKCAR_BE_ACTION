@@ -45,4 +45,40 @@ class DriveHistoryServiceTest {
             driveHistoryService.getById(0L);
         }).withMessageContaining("DriveHistory Not Found By Id");
     }
+
+    @Test
+    @DisplayName("운행 시작 일시는 현재 시각보다 빠를 수 없음")
+    void t003() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime future = now.plusMinutes(1);
+        DriveHistoryCreateRequest testRequest1 = new DriveHistoryCreateRequest(1L, future, now, now, 1.23D);
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
+            driveHistoryService.create(testRequest1);
+        }).withMessageContaining("[ERROR] 운행 시작 일시는 현재 시각보다 빠를 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("운행 종료 일시는 현재 시각보다 빠를 수 없음")
+    void t004() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime future = now.plusMinutes(1);
+        DriveHistoryCreateRequest testRequest1 = new DriveHistoryCreateRequest(1L, now, future, now, 1.23D);
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
+            driveHistoryService.create(testRequest1);
+        }).withMessageContaining("[ERROR] 운행 종료 일시는 현재 시각보다 빠를 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("운행 종료 일시는 운행 시작 일시보다 빠를 수 없음")
+    void t005() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime past = now.minusMinutes(1);
+        DriveHistoryCreateRequest testRequest1 = new DriveHistoryCreateRequest(1L, now, past, now, 1.23D);
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
+            driveHistoryService.create(testRequest1);
+        }).withMessageContaining("[ERROR] 운행 종료 일시는 운행 시작 일시보다 빠를 수 없습니다.");
+    }
 }
