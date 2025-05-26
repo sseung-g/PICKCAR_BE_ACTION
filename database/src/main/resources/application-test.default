@@ -1,0 +1,16 @@
+# 테스트 환경에서 본인이 사용할 내용을 작성합니다
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pickcar_test    # TODO: Timezone 등 옵션 추가 필요
+    username: {DB Username (local or prod)}
+    password: {DB Password (local or prod)}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop    # 현재는 배포에서도 create-drop 으로 하지만, 나중에 update => 그 뒤 validate(최종)
+    properties:
+      hibernate:
+        show_sql: true          # TODO: 추후 LOG 환경으로 변경
+        format_sql: true
+        use_sql_comments: true
