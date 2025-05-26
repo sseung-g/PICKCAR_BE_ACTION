@@ -1,14 +1,2 @@
-spring:
-  profiles:
-    active: secret
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: # database url
-    username: # database username
-    password: # database password
-  jpa:
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQLDialect
-    open-in-view: false
-    hibernate:
-      ddl-auto: create
+server:
+  port: 8083    # TODO: 모듈별 포트번호 지정 필요
