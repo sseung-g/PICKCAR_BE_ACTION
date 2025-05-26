@@ -6,13 +6,16 @@ import com.pickcar.reservation.infrastructure.ReservationRepository;
 import com.pickcar.reservation.presentation.dto.request.ReservationCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
+    @Transactional
     public void create(ReservationCreateRequest request) {
         //TODO: 유효성 검사 필요
         Reservation reservation = Reservation.builder()
