@@ -7,4 +7,5 @@ public record ReservationCreateRequest(
         Long userId,
         Long vehicleId,
         LocalDateTime rentedAt
-) {}
+) {
+}

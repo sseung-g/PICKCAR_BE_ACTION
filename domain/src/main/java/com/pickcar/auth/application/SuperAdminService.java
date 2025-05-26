@@ -2,10 +2,8 @@ package com.pickcar.auth.application;
 
 import com.pickcar.auth.domain.SuperAdmin;
 import com.pickcar.auth.domain.UserInfo;
-import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.domain.UserStatus;
 import com.pickcar.auth.infrastructure.SuperAdminRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

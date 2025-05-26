@@ -6,8 +6,6 @@ import com.pickcar.auth.domain.UserRole;
 import com.pickcar.auth.domain.UserStatus;
 import com.pickcar.auth.infrastructure.UserRepository;
 import com.pickcar.company.application.CompanyService;
-import com.pickcar.company.domain.ContractStatus;
-import com.pickcar.company.presentation.dto.request.CompanyJoinRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

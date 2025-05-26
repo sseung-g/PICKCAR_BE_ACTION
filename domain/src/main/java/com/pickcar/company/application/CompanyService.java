@@ -1,7 +1,6 @@
 package com.pickcar.company.application;
 
 import com.pickcar.company.domain.Company;
-import com.pickcar.company.domain.ContractStatus;
 import com.pickcar.company.infrastructure.CompanyRepository;
 import com.pickcar.company.presentation.dto.request.CompanyJoinRequest;
 import lombok.RequiredArgsConstructor;
