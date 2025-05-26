@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -25,7 +26,8 @@ public class SuperAdmin extends BaseEntity {
     private UserInfo info;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @Builder.Default
+    private UserRole role = UserRole.SUPER_ADMIN;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
