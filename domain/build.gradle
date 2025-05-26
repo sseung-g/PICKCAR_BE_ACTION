@@ -18,12 +18,6 @@ dependencies {
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.assertj:assertj-core:3.27.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation project(':database')       //DB 모듈 의존성 추가
