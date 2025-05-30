@@ -1,7 +1,7 @@
 name: Dev to EC2
 
 on:
-  workflow_dispatch:  # ❗ 수동 실행만 허용
+  workflow_dispatch:  # 수동 실행
 
 jobs:
   deploy:
@@ -17,14 +17,23 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Dev to EC2 via SSH
+        env:
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
+          DEV_DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+          DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
 cd PICKCAR_BE_ACTION
 sudo git pull origin main
-echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" > .env
-echo "DEV_DB_NAME=${{ secrets.DEV_DB_NAME }}" >> .env
-echo "DEV_DB_USERNAME=${{ secrets.DEV_DB_USERNAME }}" >> .env
-echo "DEV_DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}" >> .env
+
+echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD" > .env
+echo "DEV_DB_NAME=$DEV_DB_NAME" >> .env
+echo "DEV_DB_USERNAME=$DEV_DB_USERNAME" >> .env
+echo "DEV_DB_PASSWORD=$DEV_DB_PASSWORD" >> .env
+
 sudo docker-compose down
 sudo docker-compose up -d --build
 EOF
