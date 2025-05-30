@@ -1,29 +1,32 @@
 version: "3.8"   # 도커 컴포즈 파일의 버전 (3.8은 대부분 최신 도커 기능을 지원함)
 
 services:
-  domain:
-    build:
-      context: ./domain
-    container_name: domain-container
-    ports:
-      - "8080:8080"  # 외부:내부 포트
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-    depends_on:
-      - mysql
-    networks:
-      - backend
-
   mysql:
     image: mysql:latest
-    container_name: mysql-container-test
-    ports:
-      - "3306:3306"
+    container_name: pickcar_mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DEV_DB_NAME}
       MYSQL_USER: ${DEV_DB_USERNAME}
       MYSQL_PASSWORD: ${DEV_DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+  domain:
+    build:
+      context: .
+      dockerfile: domain/Dockerfile
+    container_name: pickcar_domain
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"  # 외부:내부 포트
     networks:
       - backend
 
@@ -40,7 +43,7 @@ networks:
 #    environment:
 #      SPRING_PROFILES_ACTIVE: dev
 #      # spring boot에서 활성화할 profile = dev
-#      # application-dev.yml 파일을 기준으로 설정 적용
+#      # application-dev.default 파일을 기준으로 설정 적용
 #    depends_on:
 #      - mysql
 #      # 이 서비스는 mysql 서비스가 먼저 실행된 후 시작됨
