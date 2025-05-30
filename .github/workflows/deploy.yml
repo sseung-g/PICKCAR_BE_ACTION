@@ -15,7 +15,7 @@ jobs:
 
       # 2) SSH 키 로드
       - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: actions/ssh-agent@v0.2.0
         with:
           ssh-private-key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
       # 3) EC2로 접속 후 배포 스크립트 실행
