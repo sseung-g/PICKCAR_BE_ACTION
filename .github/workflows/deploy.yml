@@ -1,24 +1,24 @@
-name: Deploy to EC2 (Dev)
+name: CI/CD Deploy to EC2 (Unified)
 
 on:
   push:
-    branches: main
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_ACTIONS_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
 
-      - name: Deploy to EC2 via SSH
+      - name: Deploy to EC2 (Git Pull + .env + Docker Compose)
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -26,29 +26,19 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
           script: |
-            # 작업 디렉토리 생성 및 초기화
-            mkdir -p /home/ubuntu/pickcar
-            rm -rf /home/ubuntu/pickcar/*
+            # 이동 및 최신 코드 pull
+            cd ~/PICKCAR_BE_ACTION
+            git pull origin main
 
-      - name: Copy Project to EC2
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          port: ${{ secrets.EC2_PORT }}
-          key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
-          source: "."
-          target: "/home/ubuntu/pickcar"
+            # .env 파일 생성
+            cat > .env <<EOL
+            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+            MYSQL_DATABASE=${{ secrets.DEV_DB_NAME }}
+            MYSQL_USER=${{ secrets.DEV_DB_USERNAME }}
+            MYSQL_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}
+            EOL
 
-      - name: Build & Run Docker Compose
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          port: ${{ secrets.EC2_PORT }}
-          key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/pickcar
+            # Docker Compose 재시작
             docker-compose down
             docker-compose pull
             docker-compose up -d --build
