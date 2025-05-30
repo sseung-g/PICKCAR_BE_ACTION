@@ -21,10 +21,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
 cd ~/PICKCAR_BE_ACTION
 
-# 최신 dev 브랜치 코드 pull
 sudo git pull origin main
 
-# .env 파일 생성
 cat > .env <<EOL
 MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
 DEV_DB_NAME=${{ secrets.DEV_DB_NAME }}
@@ -32,7 +30,6 @@ DEV_DB_USERNAME=${{ secrets.DEV_DB_USERNAME }}
 DEV_DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}
 EOL
 
-# 도커 컴포즈 재빌드 및 실행
 sudo docker-compose down
 sudo docker-compose up -d --build
 EOF
