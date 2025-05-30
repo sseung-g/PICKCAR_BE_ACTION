@@ -26,7 +26,14 @@ jobs:
           DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
         run: |
           ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
-cd PICKCAR_BE_ACTION
+echo "📂 현재 경로:"
+pwd
+
+echo "📁 디렉토리 목록:"
+ls -al
+
+cd ~/PICKCAR_BE_ACTION || { echo "❌ 디렉토리 없음"; exit 1; }
+
 sudo git pull origin main
 
 echo "MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD" > .env
