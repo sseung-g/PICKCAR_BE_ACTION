@@ -23,6 +23,9 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      DEV_DB_NAME: ${DEV_DB_NAME}
+      DEV_DB_USERNAME: ${DEV_DB_USERNAME}
+      DEV_DB_PASSWORD: ${DEV_DB_PASSWORD}
     depends_on:
       - mysql
     ports:
