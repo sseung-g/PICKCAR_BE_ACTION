@@ -1,23 +1,20 @@
-# 1) Build stage
+# 1) Build Stage
 FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /app
 
-COPY settings.gradle build.gradle gradlew ./
-COPY gradle gradle
+# 전체 프로젝트 복사
+COPY . .
 
+# 실행 권한
 RUN chmod +x ./gradlew
 
-# 의존성 캐시 레이어
-RUN ./gradlew :domain:compileJava -x test --no-daemon
-
-COPY domain domain
-
+# domain 모듈만 빌드
 RUN ./gradlew :domain:build -x test --no-daemon
 
-# 2) Runtime stage
+# 2) Runtime Stage
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-COPY --from=builder /app/domain/build/libs/domain-*.jar app.jar
+COPY --from=builder /app/domain/build/libs/domain-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
