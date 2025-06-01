@@ -25,4 +25,5 @@ WORKDIR /app
 # 로컬에서 미리 빌드된 JAR 파일 복사
 COPY domain/build/libs/domain-0.0.1-SNAPSHOT.jar app.jar
 
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
