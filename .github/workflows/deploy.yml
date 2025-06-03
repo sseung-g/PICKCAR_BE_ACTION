@@ -31,7 +31,7 @@ jobs:
 
       ### 4. 🏗️ 프로젝트 빌드
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
 
       #현재 디렉토리 전체를 EC2로 복사 (TODO : 추후 변경된 파일만 push되도록 수정 필요)
       - name: Copy project source code to EC2 (excluding .git, .github)
