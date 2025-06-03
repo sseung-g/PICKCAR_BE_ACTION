@@ -25,6 +25,14 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
 
+      ### 3. gradlew 실행 권한 부여
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+
+      ### 4. 🏗️ 프로젝트 빌드
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
       #현재 디렉토리 전체를 EC2로 복사 (TODO : 추후 변경된 파일만 push되도록 수정 필요)
       - name: Copy project source code to EC2 (excluding .git, .github)
         run: |
@@ -59,8 +67,14 @@ jobs:
           key: ${{ secrets.EC2_ACTIONS_SSH_KEY }}
           script: |
             set -e
+            cd /home/ubuntu/PICKCAR_BE_ACTION/domain/src/main/resources
+            rm -f application-dev.yml
+            cp application-dev.default application-dev.yml
+            echo "application-dev.yml 파일이 생성되었습니다."
+            
+            echo "도커에 up 시작"
             cd /home/ubuntu/PICKCAR_BE_ACTION
             sudo docker-compose down
-            sudo docker system prune -af
+            sudo docker container prune -af
             sudo docker-compose build --no-cache
             sudo docker-compose up -d
